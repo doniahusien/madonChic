@@ -9,7 +9,7 @@ const LoginPage = () => {
                 <LoginForm />
                 <h2 className="text-center mt-5 text-gray-600">
                     Don't have an account?{" "}
-                    <Link href="signup"><span className="text-blue-600 hover:underline cursor-pointer">Sign Up</span></Link>
+                    <Link href="/signup"><span className="text-blue-600 hover:underline cursor-pointer">Sign Up</span></Link>
                 </h2>
         </AuthWrapper>
     );
