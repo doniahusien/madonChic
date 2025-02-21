@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
+    "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.7.9",
     "framer-motion": "^12.4.7",
     "lucide-react": "^0.475.0",
