@@ -21,9 +21,9 @@ const SignupForm = () => {
     }
     return (
         <>
-            <form className="flex flex-col justify-center items-center gap-5 w-full p-8 " onSubmit={handleSubmit}>
+            <form className="flex flex-col justify-center items-center gap-5 w-full sm:p-4 md:p-8 " onSubmit={handleSubmit}>
 
-                <div className='flex flex-row justify-between'>
+                <div className='flex w-full gap-5 flex-col sm:flex-col md:flex-row justify-between'>
                     <Input
                         type="text"
                         name="firstName"
@@ -64,7 +64,7 @@ const SignupForm = () => {
                 />
 
 
-                <div className=' flex flex-row justify-between '>
+                <div className='flex w-full gap-5 flex-col sm:flex-col md:flex-row justify-between'>
                     <Input
                         type="password"
                         name="password"
