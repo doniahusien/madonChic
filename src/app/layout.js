@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { useState, useEffect } from "react";
 import DelayedLoader from "@/components/Loader/DelayedLoader";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
+import Nav from "@/components/Nav/Nav";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,6 +23,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Provider store={store}>
+          <Nav/>
           {loading? <DelayedLoader onDone={()=>setLoading(false)}/>:children}
         </Provider>
       </body>
