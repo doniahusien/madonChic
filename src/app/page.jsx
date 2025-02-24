@@ -1,9 +1,18 @@
 "use client"
-import { motion } from "framer-motion";
+import Header from "@/components/Home/Header";
+import MainCard from "@/components/Home/MainCard";
+import TrendingProducts from "@/components/Home/TrendingProducts";
+import RatedProducts from "@/components/Home/RatedProducts";
 export default function Home() {
   return (
     <>
-    
+      <div className="pt-28 flex flex-col gap-10" >
+        <Header />
+        <MainCard />
+        <TrendingProducts />
+        <RatedProducts />
+      </div>
+  
     </>
   );
 }
