@@ -42,14 +42,14 @@ const Footer = () => {
     ];
 
     return (
-        <footer className="bg-gray-300 mt-5 p-6 text-black flex flex-col">
+        <footer className="bg-gray-300 p-6 text-black flex flex-col mt-auto">
             <div className="container mx-auto flex flex-wrap justify-between items-start gap-6">
                 {footerLinks.map((section, index) => (
                     <div key={index}>
                         <h3 className="font-semibold text-xl mb-2">{section.title}</h3>
                         <ul className="space-y-1">
                             {section.links?.map((link, idx) => (
-                                <li key={idx} className='text-sm font-normal'>
+                                <li key={idx} className="text-sm font-normal">
                                     <Link href={link.path} className="hover:text-red-400">
                                         {link.name}
                                     </Link>
@@ -64,7 +64,7 @@ const Footer = () => {
                         </ul>
                     </div>
                 ))}
-
+    
                 {/* Compact Sign-up Section */}
                 <div className="w-[250px] rounded-lg">
                     <h3 className="font-semibold text-xl mb-2">Hey, Sign Up!</h3>
@@ -76,9 +76,9 @@ const Footer = () => {
                     </Link>
                 </div>
             </div>
-            
+    
             <div className="flex flex-col items-center py-4">
-                <div className='flex justify-center gap-4 mt-2'>
+                <div className="flex justify-center gap-4 mt-2">
                     {socialLinks.map((item, index) => (
                         <Link key={index} href={item.link} className="text-gray-600 hover:text-red-400">
                             {item.icon}
@@ -89,6 +89,7 @@ const Footer = () => {
             </div>
         </footer>
     );
+    
 }
 
 export default Footer;
