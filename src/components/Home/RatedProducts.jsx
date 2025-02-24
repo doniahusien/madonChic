@@ -24,13 +24,13 @@ const RatedProducts = () => {
             <SectionTitle title="Top Rated Products" description="The highest-rated product with exceptional customer satisfaction." />
             <div className='flex flex-row justify-center items-center gap-3 p-4 w-full flex-wrap'>
                 {rated.map((item, index) => (
-                    <div key={index} className=' transition-transform duration-300 ease-in-out  hover:scale-105  w-[200px] h-[250px] relative overflow-hidden rounded-lg'>
+                    <div key={index} className=' transition-transform duration-500 ease-in-out  hover:scale-105  w-[200px] h-[250px] relative overflow-hidden rounded-lg'>
                         <Link href="/">
                             <Image
                                 src={item.src}
                                 fill
                                 alt="item rated"
-                                className="object-cover"
+                                className="object-cover transition-transform duration-700 hover:scale-105"
                             />
                         </Link>
                     </div>
