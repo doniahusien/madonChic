@@ -19,3 +19,12 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.range-slider .range-slider__range {
+  background: #9fe7f6 !important;;
+}
+.range-slider .range-slider__thumb {
+  width: 16px !important;;
+  height: 16px !important;;
+  border: #9fe7f6 2px solid !important; ;
+  background: white !important;;
+}
