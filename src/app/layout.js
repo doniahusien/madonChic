@@ -3,10 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import store from "@/redux/store";
 import { Provider } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DelayedLoader from "@/components/Loader/DelayedLoader";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Nav from "@/components/Nav/Nav";
+import Footer from "@/components/Footer/Footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
         <Provider store={store}>
           <Nav/>
           {loading? <DelayedLoader onDone={()=>setLoading(false)}/>:children}
+          <Footer/>
         </Provider>
       </body>
     </html>
