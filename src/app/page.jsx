@@ -6,7 +6,7 @@ import RatedProducts from "@/components/Home/RatedProducts";
 export default function Home() {
   return (
     <>
-      <div className="pt-28 flex flex-col gap-10" >
+      <div className=" flex flex-col gap-10" >
         <Header />
         <MainCard />
         <TrendingProducts />
