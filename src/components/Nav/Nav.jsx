@@ -37,13 +37,13 @@ export default function Nav() {
         }
     }
     return (
-        <nav className="bg-white shadow-md fixed w-full p-5 z-50 ">
-            <div className="flex gap-5 justify-around items-center p-4 " >
+        <nav className="bg-white shadow-md fixed w-full p-2 z-50 ">
+            <div className="flex gap-10 sm:gap-10 justify-between md:justify-around items-center p-4 " >
                 <h1 className="text-3xl text-red-500">Medon</h1>
 
-                <div className=" flex flex-row justify-between gap-14">
+                <div className=" flex flex-row gap-5 sm:gap-5 md:gap-10">
                     <ul className={`lg:flex lg:static w-full lg:w-auto gap-5 absolute top-16 left-0 p-2 ${isOpen ? "block" : "hidden"} lg:flex-row lg:items-center`}>
-                        {navLinks.map(( link, index) => (
+                        {navLinks.map((link, index) => (
                             <li key={index} className="hover:text-red-400">
                                 <Link href={link.href} className={`${pathname === link.href ? "border-b-2 border-red-400 " : ""}`}>
                                     {link.label}
@@ -51,15 +51,21 @@ export default function Nav() {
                             </li>
                         ))}
                     </ul>
-                    <div className="flex flex-row border border-gray-400 rounded-full opacity-2 px-2 ">
-                        <input type="text" value={query} onChange={handleChange} name="srch" id="" placeholder="serach" className="bg-transparent outline-none w-full p-2" />
+                    <div className="flex flex-row md:border md:border-gray-400 md:rounded-full opacity-2 px-0 md:px-10 ">
+                        <input
+                            type="text"
+                            value={query}
+                            onChange={handleChange}
+                            name="srch"
+                            placeholder="serach"
+                            className="bg-transparent hidden sm:hidden md:block outline-none w-full p-2" />
                         <button>
                             <Search className="text-gray-700" />
                         </button>
                         {filteredSuggestions.length > 0 &&
-                            <ul className="absolute z-10 top-16 p-5 rounded-md bg-slate-400 ">
+                            <ul className="absolute z-10 top-16 mt-1 rounded-md bg-slate-100 ">
                                 {filteredSuggestions.map((item, index) => (
-                                    <li key={index} onClick={() => {
+                                    <li key={index} className=" px-5 py-2 cursor-pointer hover:bg-slate-200" onClick={() => {
                                         setQuery(item);
                                         setFiltered([]);
                                     }} >
@@ -68,26 +74,28 @@ export default function Nav() {
                                 ))}
                             </ul>}
                     </div>
+                    <div className="flex flex-row sm:gap-2 md:gap-5">
+                        <Link href="/cart">
+                            <div className=" relative flex justify-center items-center text-center bg-gray-200 p-2 rounded-full">
+                                <ShoppingBag />
 
-                </div>
-                <div className="flex flex-row gap-5">
-                    <Link href="/cart">
-                        <div className=" relative flex justify-center items-center text-center bg-gray-200 p-2 rounded-full">
-                            <ShoppingBag />
-
-                            <span className="absolute bottom-7 left-6 text-sm bg-red-300 w-5 h-5 flex items-center justify-center rounded-full">
-                                2
-                            </span>
-                        </div>
-                    </Link>
-
-
-                    <div className=" flex justify-center items-center">
-                        <Link href="/profile">
-                            <User />
+                                <span className="absolute bottom-7 left-6 text-sm bg-red-300 w-5 h-5 flex items-center justify-center rounded-full">
+                                    2
+                                </span>
+                            </div>
                         </Link>
+
+
+                        <div className=" flex justify-center items-center">
+                            <Link href="/profile">
+                                <User />
+                            </Link>
+                        </div>
                     </div>
+
                 </div>
+
+
                 <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
                     {isOpen ? <X /> : <Menu />}
                 </button>
