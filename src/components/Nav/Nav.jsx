@@ -91,14 +91,15 @@ export default function Nav() {
                                 <User />
                             </Link>
                         </div>
+                        <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
+                    {isOpen ? <X /> : <Menu />}
+                </button>
                     </div>
 
                 </div>
 
 
-                <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
-                    {isOpen ? <X /> : <Menu />}
-                </button>
+            
             </div>
         </nav>
     );
