@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
       transition={{ duration: 0.5 }} 
       className='bg-white w-[200px] md:w-[280px] h-[320px] relative overflow-hidden rounded-lg shadow-md cursor-pointer'
     >
-      <Link href="/" className='flex flex-col items-start '>
+      <Link href={`/perview/${product.id}`} className='flex flex-col items-start '>
         <div className='w-full h-[250px] relative overflow-hidden'>
           <Image
             src={product.image}
