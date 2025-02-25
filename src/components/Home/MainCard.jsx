@@ -6,8 +6,8 @@ import { motion } from 'framer-motion';
 
 const MainCard = () => {
     const cards = [
-        { imgs: "/man.jpg.webp", label: "Men's Fashion", href: "/men" },
-        { imgs: "/woman.jpg.webp", label: "Women's Fashion", href: "/women" },
+        { imgs: "/man.jpg.webp", label: "Men's Fashion", href: "/mens" },
+        { imgs: "/woman.jpg.webp", label: "Women's Fashion", href: "/womens" },
     ];
 
     return (
@@ -18,7 +18,7 @@ const MainCard = () => {
                     <motion.div
                         key={index}
                         transition={{ duration: 0.8, delay: index * 0.5 }}
-                        whileHover={{ scale: 1.08 }} 
+                        whileHover={{ scale: 1.08 }}
                         className="relative shadow-lg drop-shadow-lg shadow-gray-500 overflow-hidden"
                     >
                         <Image
