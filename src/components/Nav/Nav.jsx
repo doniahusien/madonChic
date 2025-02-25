@@ -42,9 +42,14 @@ export default function Nav() {
                 <h1 className="text-3xl text-red-500">Medon</h1>
 
                 <div className=" flex flex-row gap-5 sm:gap-5 md:gap-10">
-                    <ul className={`lg:flex lg:static w-full lg:w-auto gap-5 absolute top-16 left-0 p-2 ${isOpen ? "block" : "hidden"} lg:flex-row lg:items-center`}>
+                    <ul
+                        className={`lg:flex bg-white transition-transform duration-700 ease-in-out 
+                                ${isOpen ? "translate-x-0" : "translate-x-full"} 
+                                lg:static w-full lg:w-auto gap-5 absolute top-16 left-0 p-2 
+                                lg:translate-x-0 lg:flex-row lg:items-center`}
+                    >
                         {navLinks.map((link, index) => (
-                            <li key={index} className="hover:text-red-400">
+                            <li key={index} className="py-3 md:py-0 hover:text-red-400">
                                 <Link href={link.href} className={`${pathname === link.href ? "border-b-2 border-red-400 " : ""}`}>
                                     {link.label}
                                 </Link>
@@ -92,14 +97,14 @@ export default function Nav() {
                             </Link>
                         </div>
                         <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
-                    {isOpen ? <X /> : <Menu />}
-                </button>
+                            {isOpen ? <X /> : <Menu />}
+                        </button>
                     </div>
 
                 </div>
 
 
-            
+
             </div>
         </nav>
     );
