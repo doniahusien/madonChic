@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
     <motion.div 
       whileHover={{ scale: 1.01, boxShadow: "0px 10px 20px rgba(0,0,0,0.3)" }}
       transition={{ duration: 0.5 }} 
-      className='bg-white w-[270px] h-[320px] relative overflow-hidden rounded-lg shadow-md cursor-pointer'
+      className='bg-white w-[200px] md:w-[280px] h-[320px] relative overflow-hidden rounded-lg shadow-md cursor-pointer'
     >
       <Link href="/" className='flex flex-col items-start '>
         <div className='w-full h-[250px] relative overflow-hidden'>

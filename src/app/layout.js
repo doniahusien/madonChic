@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
       <Provider store={store}>
         <Nav />
-        <main className="flex-grow pt-28 pb-5">
+        <main className="flex-grow pt-20 pb-5">
           {loading ? <DelayedLoader onDone={() => setLoading(false)} /> : children}
         </main>
         <Footer />
