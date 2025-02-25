@@ -5,8 +5,8 @@ import Link from "next/link";
 export default function Nav() {
     const navLinks = [
         { href: "/", label: "Home" },
-        { href: "/mens", label: "Mens" },
-        { href: "/womens", label: "Womens" },
+        { href: "/mens", label: "Men's" },
+        { href: "/womens", label: "Women's" },
         { href: "/top-selling", label: "Top Selling" },
         { href: "/newest", label: "Newest" }
     ];
