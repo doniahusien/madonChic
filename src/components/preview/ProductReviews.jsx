@@ -1,20 +1,17 @@
-"use client"
+"use client";
 import React, { useState } from "react";
-import { X } from "lucide-react";
-const ProductReviews = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [review, setReview] = useState("");
-  const [rating, setRating] = useState(0);
+import Image from "next/image";
+import ReviewModel from "./ReviewModel";
 
-  const handleSubmit = () => {
-    console.log("Submitted Review:", { review, rating });
-    setShowModal(false);
-  };
+const ProductReviews = ({ reviews }) => {
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center border-b pb-2">
-        <h3 className="text-lg font-semibold">Total Reviews 0</h3>
+      <div className="flex w-full md:w-1/2 justify-between items-center border-b pb-2">
+        <h3 className="text-lg font-semibold">
+          Total Reviews {reviews.length}
+        </h3>
         <button
           className="bg-red-600 text-white px-4 py-2 rounded-md"
           onClick={() => setShowModal(true)}
@@ -23,56 +20,37 @@ const ProductReviews = () => {
         </button>
       </div>
 
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
-            <h2 className="text-xl font-semibold">Write Review</h2>
-
-            <div className="flex gap-1 my-3">
+      {/* Displaying Reviews */}
+      {reviews.map((rev, index) => (
+        <div key={index} className="flex items-start space-x-5 mt-4 border-b pb-3 w-full md:w-1/2">
+          <Image
+            src={rev.avatar}
+            alt="User Avatar"
+            width={40}
+            height={40}
+            className="rounded-full"
+          />
+          <div className="flex-1">
+            <p className="font-thin text-sm md:font-semibold md:text-base ">{rev.name}</p>
+            <div className="flex">
               {[1, 2, 3, 4, 5].map((star) => (
                 <span
                   key={star}
-                  className={`cursor-pointer text-2xl ${
-                    star <= rating ? "text-yellow-400" : "text-gray-300"
+                  className={`text-lg ${
+                    star <= rev.rating ? "text-yellow-400" : "text-gray-300"
                   }`}
-                  onClick={() => setRating(star)}
                 >
                   ★
                 </span>
               ))}
             </div>
-
-            <textarea
-              className="w-full border p-2 rounded mb-4"
-              rows="4"
-              placeholder="Write your review here..."
-              value={review}
-              onChange={(e) => setReview(e.target.value)}
-            />
-
-            <div className="flex justify-between items-center">
-             
-              <button
-                className="w-full bg-red-600 text-white py-2 rounded"
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            </div>
-
-            <button
-              className="absolute top-3 right-3 text-xl text-gray-600"
-              onClick={() => setShowModal(false)}
-            >
-             <X />
-            </button>
-
-            <p className="text-sm text-gray-500 mt-2">
-              Note: If you've already added a review, then it will be edited.
-            </p>
+            <p>{rev.comment}</p>
           </div>
+          <p className="text-gray-500 text-sm">{rev.date}</p>
         </div>
-      )}
+      ))}
+
+      {showModal && <ReviewModel showModal={showModal} setShowModal={setShowModal} />}
     </div>
   );
 };
