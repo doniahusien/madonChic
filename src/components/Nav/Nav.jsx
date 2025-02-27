@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Menu, X, ShoppingBag, Search, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import CartSidebar from "../cart/CartSidebar";
 export default function Nav() {
+    const [cartOpen, setCart] = useState(false);
     const navLinks = [
         { href: "/", label: "Home" },
         { href: "/mens", label: "Men's" },
@@ -80,17 +82,16 @@ export default function Nav() {
                             </ul>}
                     </div>
                     <div className="flex flex-row sm:gap-2 md:gap-5">
-                        <Link href="/cart">
-                            <div className=" relative flex justify-center items-center text-center bg-gray-200 p-2 rounded-full">
-                                <ShoppingBag />
 
-                                <span className="absolute bottom-7 left-6 text-sm bg-red-300 w-5 h-5 flex items-center justify-center rounded-full">
-                                    2
-                                </span>
-                            </div>
-                        </Link>
+                        <div
+                            onClick={() => setCart(true)}
+                            className="cursor-pointer relative flex justify-center items-center text-center bg-gray-200 p-2 rounded-full">
+                            <ShoppingBag />
 
-
+                            <span className="absolute bottom-7 left-6 text-sm bg-red-300 w-5 h-5 flex items-center justify-center rounded-full">
+                                2
+                            </span>
+                        </div>
                         <div className=" flex justify-center items-center">
                             <Link href="/profile">
                                 <User />
@@ -102,9 +103,12 @@ export default function Nav() {
                     </div>
 
                 </div>
-
-
-
+                {cartOpen && (
+                    <>
+                        <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={() => setCart(false)}></div>
+                        <CartSidebar cartOpen={cartOpen} setCart={setCart} />
+                    </>
+                )}
             </div>
         </nav>
     );
