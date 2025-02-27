@@ -2,9 +2,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 import CartItems from "./CartItems";
 const CartSidebar = ({ cartOpen, setCart }) => {
+    const router = useRouter();
     const cartItems = [
         { id: 1, name: "Printed Lifestyle T-shirt", size: "L", price: 650, quantity: 4, img: "/Men.jpeg" },
         { id: 2, name: "Dress", size: "XS", price: 650, quantity: 4, img: "/rated1.jpeg" },
@@ -30,7 +31,7 @@ const CartSidebar = ({ cartOpen, setCart }) => {
                     <span>Rs. {subtotal}</span>
                 </div>
                 <p className="text-xs text-gray-500">Shipping, taxes, and discounts calculated at checkout.</p>
-                <button className="w-full bg-black text-white py-2 mt-3 rounded">Check out</button>
+                <button onClick={()=>router.push("/checkout")} className="w-full bg-black text-white py-2 mt-3 rounded">Check out</button>
             </div>
         </motion.div>
     );
