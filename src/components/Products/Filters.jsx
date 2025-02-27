@@ -11,12 +11,11 @@ const Filters = ({ categories }) => {
     const [maxPrice, setMaxPrice] = useState(2500);
     const [isMdScreen, setIsMdScreen] = useState(false);
 
-    // Detect screen size changes
     useEffect(() => {
         const handleResize = () => {
             setIsMdScreen(window.innerWidth >= 768);
         };
-        handleResize(); // Initialize on mount
+        handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
@@ -41,7 +40,7 @@ const Filters = ({ categories }) => {
                 </div>
             )}
 
-            {/* Filter Sidebar */}
+          
             <motion.div
                 initial={{ x: "-100%", opacity: 0 }}
                 animate={{ x: isOpen || isMdScreen ? 0 : "-100%", opacity: isOpen || isMdScreen ? 1 : 0 }}
@@ -70,6 +69,7 @@ const Filters = ({ categories }) => {
                             step={200}
                             value={[minPrice, maxPrice]}
                             onInput={handleSliderChange}
+                            className=" cursor-move "
                         />
                     </div>
 
