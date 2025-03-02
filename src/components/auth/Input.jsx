@@ -14,7 +14,7 @@ const Input = ({ type, placeholder, name, value, onChange }) => {
                 value={value}
                 onChange={onChange}
                 className="border w-full mx-1 border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required
+               
             />
         </>
     )
