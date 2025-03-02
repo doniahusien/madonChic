@@ -1,10 +1,11 @@
 "use client"
 import React from 'react'
 import { motion } from 'framer-motion'
-const Button = ({ title }) => {
+const Button = ({ title,loading=false }) => {
     return (
         <>
             <motion.button
+                disabled={loading}
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.9, y: 2 }}
                 type="submit"
