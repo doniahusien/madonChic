@@ -4,7 +4,9 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CartSidebar from "../cart/CartSidebar";
+import { useSelector } from "react-redux";
 export default function Nav() {
+    const {token}= useSelector(state=>state.auth);
     const [cartOpen, setCart] = useState(false);
     const router = useRouter();
     const navLinks = [
@@ -95,7 +97,7 @@ export default function Nav() {
                             </span>
                         </div>
                         <div className=" flex justify-center items-center">
-                            <Link href="/profile">
+                            <Link href={`${token?"/profile":"/login"}`}>
                                 <User />
                             </Link>
                         </div>
