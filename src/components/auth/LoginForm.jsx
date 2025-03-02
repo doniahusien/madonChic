@@ -3,8 +3,12 @@ import React from 'react'
 import { useState } from 'react'
 import Input from './Input'
 import Button from './Button'
+import { login } from '@/redux/features/auth/authThunk'
+import { useSelector,useDispatch } from 'react-redux'
 
 const LoginForm = () => {
+    const dispatch = useDispatch();
+    const { loading, error } = useSelector((state) => state.auth);
     const [formData, setFormData] = useState({
         email: "",
         password:"",
@@ -14,6 +18,7 @@ const LoginForm = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(login(formData));
     }
     return (
         <>
@@ -32,8 +37,8 @@ const LoginForm = () => {
                     placeholder="Password"
                     value={formData.password}
                     onChange={handleChange}
-                />
-                <Button title="Login" />
+                />{error&&<p className='text-red-600'>{error}</p>}
+                <Button title="Login" loading={loading} />
             </form>
         </>
     )
