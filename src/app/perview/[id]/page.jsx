@@ -13,7 +13,7 @@ export default function ProductPreview() {
     const dispatch = useDispatch();
     const { id } = useParams();
     const [showModal, setShowModal] = useState(false);
-    const { product, review, loading, error } = useSelector((state) => state.shop);
+    const { totalReview,product, review, loading, error } = useSelector((state) => state.shop);
 
     useEffect(() => {
         if (id) {
@@ -46,7 +46,7 @@ export default function ProductPreview() {
 
             <div className="flex w-full md:w-1/2 justify-between items-center border-b pb-2">
                 <h3 className="text-lg font-semibold">
-                    Total Reviews {product.reviews}
+                    Total Reviews {totalReview?totalReview:0}
                 </h3>
                 <button
                     className="bg-red-600 text-white px-4 py-2 rounded-md"
@@ -55,7 +55,7 @@ export default function ProductPreview() {
                     Write Review
                 </button>
             </div>
-            {review.length > 0 && <ProductReviews review={review} setShowModal={setShowModal} showModal={showModal}  totalReview={product.reviews} />}
+            {review.length > 0 && <ProductReviews review={review}/>}
             {showModal && <ReviewModel showModal={showModal} setShowModal={setShowModal} />}
             <DeliverySection />
         </div>
