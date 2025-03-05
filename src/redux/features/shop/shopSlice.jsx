@@ -6,6 +6,7 @@ const initialState = {
     loading: false,
     error: null,
     success: null,
+    totalReview:0,
 }
 const shopSlice = createSlice({
     name: "shop",
@@ -25,7 +26,8 @@ const shopSlice = createSlice({
             })
             //product review 
             .addCase(fetchProductReview.fulfilled, (state, action) => {
-                state.review = action.payload;
+                state.review = action.payload.data;
+                state.totalReview = action.payload.reviews;            
                 state.loading = false;
             })
             .addCase(fetchProductReview.pending, (state) => {
