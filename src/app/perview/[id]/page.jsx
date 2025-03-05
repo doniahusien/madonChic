@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 import { fetchProduct, fetchProductReview } from "@/redux/features/shop/shopThunk";
 import { useParams } from "next/navigation";
+import ReviewModel from "@/components/preview/ReviewModel"
 
 export default function ProductPreview() {
     const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export default function ProductPreview() {
                 </button>
             </div>
             {review.length > 0 && <ProductReviews review={review} setShowModal={setShowModal} showModal={showModal}  totalReview={product.reviews} />}
+            {showModal && <ReviewModel showModal={showModal} setShowModal={setShowModal} />}
             <DeliverySection />
         </div>
     );
