@@ -3,12 +3,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ReviewModel from "./ReviewModel";
 
-const ProductReviews = ({ review ,setShowModal,showModal}) => {
+const ProductReviews = ({ review }) => {
 
   return (
     <div className="p-4">
-      
-
       {/* Displaying Reviews */}
       {review.map((rev, index) => (
         <div key={index} className="flex items-start space-x-5 mt-4 border-b pb-3 w-full md:w-1/2">
@@ -46,7 +44,6 @@ const ProductReviews = ({ review ,setShowModal,showModal}) => {
         </div>
       ))}
 
-      {showModal && <ReviewModel showModal={showModal} setShowModal={setShowModal} />}
     </div>
   );
 };
