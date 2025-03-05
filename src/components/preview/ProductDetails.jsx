@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from "react";
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ product ,sizes}) => {
   const [selectedSize, setSelectedSize] = useState(null);
 
   return (
@@ -10,21 +10,21 @@ const ProductDetails = ({ product }) => {
       <h2 className="text-lg">{product.name}</h2>
 
       <div className="flex items-center gap-10 text-xl text-gray-600">
-        <span className=" text-yellow-500">⭐ 0</span>
-        <span>0 Reviews</span>
+        <span className=" text-yellow-500">⭐ {product.rate}</span>
+        <span>{product.reviews} Reviews</span>
       </div>
 
       <div className="mt-2 flex items-center gap-2">
-        <span className="text-red-600 text-2xl">₹{product.price}</span>
-        <span className="text-gray-500 line-through">₹{product.originalPrice}</span>
+        <span className="text-red-600 text-2xl">₹{product.price_after_discount}</span>
+        <span className="text-gray-500 line-through">₹{product.price}</span>
         <span className="text-green-600 text-sm">
-          Save ₹{product.originalPrice - product.price} ({product.discount}%)
+          Save ₹{product.price - product.price_after_discount} ({product.discount}%)
         </span>
       </div>
 
       <div className="mt-4">
         <div className="flex gap-2">
-          {product.sizes.map((size) => (
+          {sizes.map((size) => (
             <button
               key={size}
               className={`border px-4 py-1 rounded hover:text-white hover:bg-black cursor-pointer  transition-all duration-700 ease-in-out ${
