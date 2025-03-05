@@ -15,3 +15,17 @@ export const fetchProduct = createAsyncThunk(
         }
     }
 );
+
+export const fetchProductReview= createAsyncThunk(
+    "shop/fetchProductReview",
+    async ({product_id}, { rejectWithValue }) => {
+        try {
+            const response = await axios.get(
+                `https://e-commerce-production-8442.up.railway.app/api/get-reviews?product_id=${product_id}`
+            );
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "Something went wrong");
+        }
+    }
+);
