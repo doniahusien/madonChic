@@ -57,11 +57,6 @@ const ProductDetails = ({ product ,sizes}) => {
         Free Shipping on orders above ₹1500. Will ship within 3-6 days.
       </p>
 
-      {/* Description */}
-      <div className="mt-4 rounded">
-        <h3 className="bg-gray-200 px-2 py-3">Description</h3>
-        <p className="text-sm mt-2 pl-2">{product.description}</p>
-      </div>
     </div>
   );
 };
