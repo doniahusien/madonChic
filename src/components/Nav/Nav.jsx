@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client"
+import { useState, useEffect } from "react";
 import { Menu, X, ShoppingBag, Search, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -6,8 +7,14 @@ import Link from "next/link";
 import CartSidebar from "../cart/CartSidebar";
 import { useSelector } from "react-redux";
 export default function Nav() {
-    const {token}= useSelector(state=>state.auth);
+    const { token } = useSelector(state => state.auth);
     const [cartOpen, setCart] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
     const router = useRouter();
     const navLinks = [
         { href: "/", label: "Home" },
@@ -45,7 +52,7 @@ export default function Nav() {
     return (
         <nav className="bg-white shadow-md fixed w-full p-2 z-50 ">
             <div className="flex gap-10 sm:gap-10 justify-between md:justify-around items-center p-4 " >
-                <h1 className="text-3xl text-red-500 cursor-pointer"onClick={()=>router.push("/")} >Medon</h1>
+                <h1 className="text-3xl text-red-500 cursor-pointer" onClick={() => router.push("/")} >Medon</h1>
 
                 <div className=" flex flex-row gap-5 sm:gap-5 md:gap-10">
                     <ul
@@ -97,10 +104,13 @@ export default function Nav() {
                             </span>
                         </div>
                         <div className=" flex justify-center items-center">
-                            <Link href={`${token?"/profile":"/login"}`}>
-                                <User />
-                            </Link>
+                            {isMounted && (
+                                <Link href={token ? "/profile" : "/login"}>
+                                    <User />
+                                </Link>
+                            )}
                         </div>
+
                         <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
                             {isOpen ? <X /> : <Menu />}
                         </button>
