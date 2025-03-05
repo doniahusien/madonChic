@@ -18,7 +18,7 @@ export const fetchMenProducts = createAsyncThunk(
     async ({ page = 1, category = "", low_price = 0, max_price = "" }, { rejectWithValue }) => {
         try {
             const response = await axios.get(
-                `http://e-commerce-production-8442.up.railway.app/api/men?page=${page}&category=${category}&low_price=${low_price}&max_price=${max_price}`
+                `https://e-commerce-production-8442.up.railway.app/api/men?page=${page}&category=${category}&low_price=${low_price}&max_price=${max_price}`
             );
             return response.data;
         } catch (error) {
@@ -33,7 +33,7 @@ export const fetchWomenProducts = createAsyncThunk(
     async ({ page = 1, category = "", low_price = 0, max_price = "" }, { rejectWithValue }) => {
         try {
             const response = await axios.get(
-                `http://e-commerce-production-8442.up.railway.app/api/women?page=${page}&category=${category}&low_price=${low_price}&max_price=${max_price}`
+                `https://e-commerce-production-8442.up.railway.app/api/women?page=${page}&category=${category}&low_price=${low_price}&max_price=${max_price}`
             );
             return response.data;
         } catch (error) {
@@ -49,7 +49,7 @@ export const fetchTopSellingProducts = createAsyncThunk(
     async ({category = "", low_price = 0, max_price = "" }, { rejectWithValue }) => {
         try {
             const response = await axios.get(
-                `http://e-commerce-production-8442.up.railway.app/api/topselling?category=${category}&low_price=${low_price}&max_price=${max_price}`
+                `https://e-commerce-production-8442.up.railway.app/api/topselling?category=${category}&low_price=${low_price}&max_price=${max_price}`
             );
             return response.data;
         } catch (error) {
@@ -64,7 +64,7 @@ export const fetchNewestProducts = createAsyncThunk(
     async ({category = "", low_price = 0, max_price = "" }, { rejectWithValue }) => {
         try {
             const response = await axios.get(
-                `http://e-commerce-production-8442.up.railway.app/api/newest?category=${category}&low_price=${low_price}&max_price=${max_price}`
+                `https://e-commerce-production-8442.up.railway.app/api/newest?category=${category}&low_price=${low_price}&max_price=${max_price}`
             );
             return response.data;
         } catch (error) {
