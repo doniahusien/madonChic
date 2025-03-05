@@ -1,19 +1,24 @@
 "use client";
 import React, { useState } from "react";
 import { X } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { addProductReview } from "@/redux/features/shop/shopThunk";
 import { useParams } from "next/navigation";
-
+import { useRouter } from "next/navigation";
 const ReviewModel = ({ showModal, setShowModal }) => {
+    const {token}= useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const router = useRouter();
     const [comment, setComment] = useState("");
     const [stars, setStars] = useState(0);
     const { id } = useParams();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        if (!token) {
+            router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
+            return;
+        }
         dispatch(addProductReview({ product_id: id, stars, comment }));
         setShowModal(false);
     };
