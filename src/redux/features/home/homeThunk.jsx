@@ -4,8 +4,6 @@ import axios from "axios";
 export const fetchHomeData = createAsyncThunk("home/fetchHomeData", async (_, { rejectWithValue }) => {
     try {
         const response = await axios.get("https://e-commerce-production-8442.up.railway.app/api/home");
-        console.log(response.data);
-
         return response.data;
     }
     catch (error) {
