@@ -8,11 +8,13 @@ import CartSidebar from "../cart/CartSidebar";
 import { useSelector } from "react-redux";
 export default function Nav() {
     const { token } = useSelector(state => state.auth);
+    const {total_items} = useSelector(state => state.cart);
     const [cartOpen, setCart] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
+        
     }, []);
 
     const router = useRouter();
@@ -100,7 +102,7 @@ export default function Nav() {
                             <ShoppingBag />
 
                             <span className="absolute bottom-7 left-6 text-sm bg-red-300 w-5 h-5 flex items-center justify-center rounded-full">
-                                2
+                                {total_items}
                             </span>
                         </div>
                         <div className=" flex justify-center items-center">
