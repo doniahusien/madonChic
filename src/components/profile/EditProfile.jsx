@@ -1,6 +1,6 @@
 import React from 'react'
 
-const EditProfile = ({ profileData,setProfileData }) => {
+const EditProfile = ({ profileData, setProfileData }) => {
     const handleProfileChange = (e) => {
         setProfileData({ ...profileData, [e.target.name]: e.target.value });
     };
@@ -15,18 +15,18 @@ const EditProfile = ({ profileData,setProfileData }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                         type="text"
-                        name="firstName"
+                        name="first_name"
                         placeholder="First Name"
-                        value={profileData.firstName}
+                        value={profileData.first_name}
                         onChange={handleProfileChange}
                         className="border p-2 rounded w-full"
                         required
                     />
                     <input
                         type="text"
-                        name="lastName"
+                        name="last_name"
                         placeholder="Last Name"
-                        value={profileData.lastName}
+                        value={profileData.last_name}
                         onChange={handleProfileChange}
                         className="border p-2 rounded w-full"
                         required
@@ -43,9 +43,9 @@ const EditProfile = ({ profileData,setProfileData }) => {
                 />
                 <input
                     type="text"
-                    name="mobile"
+                    name="phone"
                     placeholder="Mobile No."
-                    value={profileData.mobile}
+                    value={profileData.phone}
                     onChange={handleProfileChange}
                     className="border p-2 rounded w-full"
                     required
@@ -55,30 +55,18 @@ const EditProfile = ({ profileData,setProfileData }) => {
                     type="text"
                     name="address"
                     placeholder="Address"
-                    value={profileData.address}
+                    value={profileData.address || ""}
                     onChange={handleProfileChange}
                     className="border p-2 rounded w-full"
                 />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input
-                        type="text"
-                        name="city"
-                        placeholder="City"
-                        value={profileData.city}
-                        onChange={handleProfileChange}
-                        className="border p-2 rounded w-full"
-                    />
-                    <input
-                        type="text"
-                        name="zipCode"
-                        placeholder="Country"
-                        value={profileData.country}
-                        onChange={handleProfileChange}
-                        className="border p-2 rounded w-full"
-
-                    />
-                </div>
-
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="Location"
+                    value={profileData.location || ""}
+                    onChange={handleProfileChange}
+                    className="border p-2 rounded w-full"
+                />
                 <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
                     Save Changes
                 </button>

@@ -3,21 +3,20 @@ import React from 'react'
 import { logout } from '@/redux/features/auth/authThunk'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
-const ProfileData = (profileData, handleImageChange,selectedImage) => {
+const ProfileData = ({profile, handleImageChange, selectedImage}) => {
     const dispatch = useDispatch();
-    const router =useRouter()
-    const handleLogout = async() => {
+    const router = useRouter()
+    const handleLogout = async () => {
         const result = await dispatch(logout());
         if (logout.fulfilled.match(result)) {
             router.push("/login");
-            console.log("Logout Success")
         }
     }
     return (
         <div className="flex items-center gap-6 border-b pb-4">
             <div className="relative w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
                 <img
-                    src={selectedImage || "/profile-placeholder.png"}
+                    src={selectedImage ||profile.image}
                     alt="Profile"
                     className="w-full h-full object-cover"
                 />
@@ -29,11 +28,11 @@ const ProfileData = (profileData, handleImageChange,selectedImage) => {
                 />
             </div>
             <div>
-                <h3 className="text-xl font-semibold">
-                    {profileData.firstName} {profileData.lastName}
+                <h3 className="text-lg font-semibold">
+                    Name - {profile.full_name} 
                 </h3>
-                <p className="text-gray-600">Email - {profileData.email}</p>
-                <p className="text-gray-600">Mobile No. - {profileData.mobile}</p>
+                <p className="text-gray-600">Email - {profile.email}</p>
+                <p className="text-gray-600">Mobile No. - {profile.phone}</p>
                 <button
                     onClick={handleLogout}
                     className="mt-2 px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400">
