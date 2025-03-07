@@ -9,19 +9,8 @@ import { decrementProduct } from "@/redux/features/cart/cartThunk";
 import { removeProduct } from "@/redux/features/cart/cartThunk";
 const CartItems = ({ cartItems }) => {
     const dispatch = useDispatch();
-    const { product } = useSelector((state) => state.shop); 
-    const [products, setProducts] = useState({});
     useEffect(() => {
-        cartItems.forEach((item) => {
-            dispatch(fetchProduct({ product_id: item.product_id })).then((action) => {
-                if (action.payload) {
-                    setProducts((prev) => ({
-                        ...prev,
-                        [item.product_id]: action.payload, 
-                    }));
-                }
-            });
-        });
+        dispatch(fetchProduct({ product_id: cartItems.product_id }))
     }, [cartItems, dispatch]);
 
     return (
@@ -32,7 +21,6 @@ const CartItems = ({ cartItems }) => {
             transition={{ duration: 0.5 }}
         >
             {cartItems.map((item, index) => {
-                const itemProduct = products[item.product_id] || {};
 
                 return (
                     <motion.div
@@ -43,14 +31,17 @@ const CartItems = ({ cartItems }) => {
                         transition={{ type: "spring", stiffness: 150, damping: 10, delay: index * 0.1 }}
                         exit={{ opacity: 0, x: 100 }}
                     >
-                        <img
-                            src={itemProduct.image_1 || "/placeholder.jpg"}
-                            alt={itemProduct.name || "Product Image"}
-                            className="w-24 h-24 object-cover rounded"
-                        />
+                        {item.product.images.image_1 &&
+                            <img
+                                src={item.product.images.image_1}
+                                alt={ "Product Image"}
+                                className="w-24 h-24 object-cover rounded"
+                            />
+                        }
+
 
                         <div className="flex-1 space-y-2">
-                            <p className="text-sm md:text-lg">{itemProduct.name || "Loading..."}</p>
+                            <p className="text-sm md:text-lg">{item.product.name || "Loading..."}</p>
                             <p className="text-sm text-gray-600">Size: {item.size}</p>
 
                             <div className="flex justify-between items-center gap-2 mt-2">
@@ -58,7 +49,7 @@ const CartItems = ({ cartItems }) => {
                                     <motion.button
                                         onClick={() => {
                                             dispatch(decrementProduct({ product_id: item.product_id, size: item.size }));
-                                        }} 
+                                        }}
                                         className="border px-2 rounded"
                                         whileTap={{ scale: 0.9 }}>
                                         <Minus size={14} />
@@ -73,8 +64,8 @@ const CartItems = ({ cartItems }) => {
                                     </motion.span>
                                     <motion.button
                                         onClick={() => {
-                                            dispatch(addToCart({ product_id: item.product_id, size: item.size, quantity:1 }));
-                                        }} 
+                                            dispatch(addToCart({ product_id: item.product_id, size: item.size, quantity: 1 }));
+                                        }}
                                         className="border px-2 rounded"
                                         whileTap={{ scale: 0.9 }}>
                                         <Plus size={14} />
@@ -82,9 +73,9 @@ const CartItems = ({ cartItems }) => {
                                 </motion.div>
 
                                 <motion.div
-                                     onClick={() => {
+                                    onClick={() => {
                                         dispatch(removeProduct({ product_id: item.product_id, size: item.size }));
-                                    }} 
+                                    }}
                                     whileHover={{ rotate: 10 }}
                                     whileTap={{ scale: 0.8 }}
                                 >
@@ -92,7 +83,7 @@ const CartItems = ({ cartItems }) => {
                                 </motion.div>
                             </div>
 
-                            <p className="text-sm">Rs. {itemProduct.price_after_discount}</p>
+                            <p className="text-sm">Rs. {item.product.price_after_discount}</p>
                         </div>
                     </motion.div>
                 );

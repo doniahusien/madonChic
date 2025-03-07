@@ -1,14 +1,13 @@
 "use client"
 import React, { useState } from "react";
-
-const ProductDetails = ({ product ,sizes}) => {
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/features/cart/cartThunk";
+const ProductDetails = ({ product, sizes }) => {
   const [selectedSize, setSelectedSize] = useState(null);
-
+  const dispatch = useDispatch();
   return (
     <div className="p-5 space-y-4 w-full md:w-3/4 lg:w-1/3 mx-auto">
-
       <h2 className="text-lg">{product.name}</h2>
-
       <div className="flex items-center gap-10 text-xl text-gray-600">
         <span className=" text-yellow-500">⭐ {product.rate}</span>
         <span>{product.reviews} Reviews</span>
@@ -27,9 +26,8 @@ const ProductDetails = ({ product ,sizes}) => {
           {sizes.map((size) => (
             <button
               key={size}
-              className={`border px-4 py-1 rounded hover:text-white hover:bg-black cursor-pointer  transition-all duration-700 ease-in-out ${
-                selectedSize === size ? "bg-black text-white" : "border-black"
-              }`}
+              className={`border px-4 py-1 rounded hover:text-white hover:bg-black cursor-pointer  transition-all duration-700 ease-in-out ${selectedSize === size ? "bg-black text-white" : "border-black"
+                }`}
               onClick={() => setSelectedSize(size)}
             >
               {size}
@@ -44,7 +42,11 @@ const ProductDetails = ({ product ,sizes}) => {
       </div>
 
       <div className="pt-5">
-        <button className="w-full border border-black bg-black text-white py-2 rounded hover:text-black hover:bg-white cursor-pointer  transition-all duration-700 ease-in-out">
+        <button
+          onClick={() => {
+            dispatch(addToCart({ product_id: product.id, size: selectedSize, quantity: 1 }));
+          }}
+          className="w-full border border-black bg-black text-white py-2 rounded hover:text-black hover:bg-white cursor-pointer  transition-all duration-700 ease-in-out">
           ADD TO SHOP
         </button>
         <button className="w-full border border-black bg-black text-white py-2 rounded mt-2 hover:text-black hover:bg-white cursor-pointer  transition-all duration-700 ease-in-out">
