@@ -45,6 +45,7 @@ export const addToCart = createAsyncThunk(
                 }
             );
             dispatch(fetchCart());
+            dispatch(fetchCartCount());
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "An error occurred");
