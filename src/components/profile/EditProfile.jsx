@@ -1,11 +1,45 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "@/redux/features/profile/profileThunk";
 
-const EditProfile = ({ profileData, setProfileData }) => {
+const EditProfile = () => {
+    const dispatch = useDispatch();
+    const { profile } = useSelector((state) => state.profile);
+    const [profileData, setProfileData] = useState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        street_address: "",
+        city: "",
+        country: "",
+    });
+
+   
+    useEffect(() => {
+        if (profile) {
+            setProfileData({
+                first_name: profile.first_name || "",
+                last_name: profile.last_name || "",
+                email: profile.email || "",
+                phone: profile.phone || "",
+                street_address: profile.address?.street_address || "",
+                city: profile.address?.city || "",
+                country: profile.address?.country || "",
+            });
+        }
+    }, [profile]);
+
     const handleProfileChange = (e) => {
         setProfileData({ ...profileData, [e.target.name]: e.target.value });
     };
+
     const handleProfileSubmit = (e) => {
         e.preventDefault();
+        console.log(profileData);
+        
+        dispatch(updateProfile(profileData));
     };
 
     return (
@@ -50,29 +84,39 @@ const EditProfile = ({ profileData, setProfileData }) => {
                     className="border p-2 rounded w-full"
                     required
                 />
-
                 <input
                     type="text"
-                    name="address"
-                    placeholder="Address"
-                    value={profileData.address || ""}
+                    name="street_address"
+                    placeholder="Street Address"
+                    value={profileData.street_address}
                     onChange={handleProfileChange}
                     className="border p-2 rounded w-full"
                 />
                 <input
                     type="text"
-                    name="location"
-                    placeholder="Location"
-                    value={profileData.location || ""}
+                    name="city"
+                    placeholder="City"
+                    value={profileData.city}
                     onChange={handleProfileChange}
                     className="border p-2 rounded w-full"
                 />
-                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
+                <input
+                    type="text"
+                    name="country"
+                    placeholder="Country"
+                    value={profileData.country}
+                    onChange={handleProfileChange}
+                    className="border p-2 rounded w-full"
+                />
+                <button
+                    type="submit"
+                    className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700"
+                >
                     Save Changes
                 </button>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default EditProfile
+export default EditProfile;
