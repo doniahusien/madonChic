@@ -5,6 +5,7 @@ import { Trash, Minus, Plus } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProduct } from "@/redux/features/shop/shopThunk";
 import { addToCart } from "@/redux/features/cart/cartThunk";
+import { decrementProduct } from "@/redux/features/cart/cartThunk";
 const CartItems = ({ cartItems }) => {
     const dispatch = useDispatch();
     const { product } = useSelector((state) => state.shop); 
@@ -53,7 +54,12 @@ const CartItems = ({ cartItems }) => {
 
                             <div className="flex justify-between items-center gap-2 mt-2">
                                 <motion.div className="flex gap-1 md:gap-2" >
-                                    <motion.button className="border px-2 rounded" whileTap={{ scale: 0.9 }}>
+                                    <motion.button
+                                        onClick={() => {
+                                            dispatch(decrementProduct({ product_id: item.product_id, size: item.size }));
+                                        }} 
+                                        className="border px-2 rounded"
+                                        whileTap={{ scale: 0.9 }}>
                                         <Minus size={14} />
                                     </motion.button>
                                     <motion.span
