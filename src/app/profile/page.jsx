@@ -2,8 +2,9 @@
 import EditProfile from "@/components/profile/EditProfile";
 import React, { useState,useEffect } from "react";
 import ProfileData from "@/components/profile/ProfileData";
+import Orders from "@/components/profile/Orders";
 import ActiveTab from "@/components/profile/ActiveTab";
-import { fetchProfile } from "@/redux/features/profile/profileThunk";
+import { fetchProfile, uploadImage } from "@/redux/features/profile/profileThunk";
 import { useSelector,useDispatch } from "react-redux";
 const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const ProfilePage = () => {
         const file = e.target.files[0];
         if (file) {
             setSelectedImage(URL.createObjectURL(file));
+            dispatch(uploadImage(file));
         }
     };
 
