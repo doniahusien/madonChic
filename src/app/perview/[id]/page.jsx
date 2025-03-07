@@ -41,7 +41,7 @@ export default function ProductPreview() {
         <div className="flex flex-col justify-center md:justify-start gap-5 pt-5 px-2 md:px-10 bg-gray-100">
             <div className="flex flex-col justify-center md:justify-start gap-5 md:flex-row">
                 {images.length > 0 && <ProductImages images={images} />}
-                {product && <ProductDetails product={product} sizes={products.sizes} />}
+                {product && <ProductDetails id={id} product={product} sizes={products.sizes} />}
             </div>
 
             <div className="flex w-full md:w-1/2 justify-between items-center border-b pb-2">
