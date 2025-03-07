@@ -63,3 +63,26 @@ export const decrementProduct = createAsyncThunk(
     }
 );
 
+export const removeProduct = createAsyncThunk(
+    "cart/removeProduct",
+    async ({ product_id, size }, { rejectWithValue, getState }) => {
+        try {
+            const token = getState().auth.token;
+            const response = await axios.post(
+                "https://e-commerce-production-8442.up.railway.app/api/cart/remove",
+                { product_id, size }, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json", 
+                    },
+                }
+            );
+            dispatch(fetchCart());
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "An error occurred");
+        }
+    }
+);
+

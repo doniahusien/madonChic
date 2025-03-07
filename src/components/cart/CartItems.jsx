@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchProduct } from "@/redux/features/shop/shopThunk";
 import { addToCart } from "@/redux/features/cart/cartThunk";
 import { decrementProduct } from "@/redux/features/cart/cartThunk";
+import { removeProduct } from "@/redux/features/cart/cartThunk";
 const CartItems = ({ cartItems }) => {
     const dispatch = useDispatch();
     const { product } = useSelector((state) => state.shop); 
@@ -80,7 +81,13 @@ const CartItems = ({ cartItems }) => {
                                     </motion.button>
                                 </motion.div>
 
-                                <motion.div whileHover={{ rotate: 10 }} whileTap={{ scale: 0.8 }}>
+                                <motion.div
+                                     onClick={() => {
+                                        dispatch(removeProduct({ product_id: item.product_id, size: item.size }));
+                                    }} 
+                                    whileHover={{ rotate: 10 }}
+                                    whileTap={{ scale: 0.8 }}
+                                >
                                     <Trash className="cursor-pointer text-gray-500 hover:text-red-500" size={18} />
                                 </motion.div>
                             </div>
