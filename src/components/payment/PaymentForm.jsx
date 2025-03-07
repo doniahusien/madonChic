@@ -1,16 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-
+import { useDispatch } from "react-redux";
+import { checkout } from "@/redux/features/checkout/checkoutThunk";
 const PaymentForm = ({ onSubmit }) => {
     const [cardNumber, setCardNumber] = useState("");
     const [expiry, setExpiry] = useState("");
     const [cvv, setCvv] = useState("");
     const [name, setName] = useState("");
     const [isFlipped, setIsFlipped] = useState(false);
-
+    const dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(checkout());
         onSubmit({ cardNumber, expiry, cvv, name });
     };
 
