@@ -15,6 +15,19 @@ export const fetchCart = createAsyncThunk("cart/fetchCart", async (_, { rejectWi
     }
 })
 
+export const fetchCartCount = createAsyncThunk("cart/fetchCartCount", async (_, { rejectWithValue, getState }) => {
+    try {
+        const token = getState().auth.token;
+        const response = await axios.get("https://e-commerce-production-8442.up.railway.app/api/cart/count", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
 
 export const addToCart = createAsyncThunk(
     "cart/addToCart",

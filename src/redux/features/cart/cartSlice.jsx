@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCart, addToCart, decrementProduct ,removeProduct } from "./cartThunk";
+import { fetchCart,fetchCartCount, addToCart, decrementProduct ,removeProduct } from "./cartThunk";
 const initialState = {
     cart: [],
     total_items: 0,
-    count: 0,
     sub_total: 0,
     success: null,
     error: null,
@@ -41,6 +40,12 @@ const cartSlice = createSlice({
                 state.success = null;
                 state.error = "An error occurred";
             })
+        .addCase(fetchCartCount.fulfilled, (state, action) => {
+            state.total_items = action.payload.total_items;
+        })
+        .addCase(fetchCartCount.rejected, (state, action) => {
+            state.total_items = 0;
+        });
     }
 });
 
