@@ -1,27 +1,37 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCheckoutInfo,checkAddress } from "@/redux/features/checkout/checkoutThunk";
 
 const Checkout = () => {
+    const { subtotal,shipping,total }=useSelector((state) => state.checkout);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchCheckoutInfo());
+    }, []);
+
     const router = useRouter();
     const [formData, setFormData] = useState({
-        name: "",
+        full_name: "",
         email: "",
-        address: "",
+        street_address: "",
         city: "",
         country: "",
-        paymentMethod: "card",
     });
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Order Placed:", formData);
-        router.push("/payment");
+        const result = await dispatch(checkAddress(formData));
+        if (result.payload.message === " User location stored successfully") {
+            router.push("/payment");
+        }
+        
     };
 
     return (
@@ -42,7 +52,7 @@ const Checkout = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <motion.input 
-                            type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange}
+                            type="text" name="full_name" placeholder="Full Name" value={formData.full_name} onChange={handleChange}
                             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition"
                             required
                             whileFocus={{ scale: 1.03 }}
@@ -55,7 +65,7 @@ const Checkout = () => {
                         />
                     </div>
                     <motion.input 
-                        type="text" name="address" placeholder="Street Address" value={formData.address} onChange={handleChange}
+                        type="text" name="street_address" placeholder="Street Address" value={formData.street_address} onChange={handleChange}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition"
                         required
                         whileFocus={{ scale: 1.03 }}
@@ -75,31 +85,21 @@ const Checkout = () => {
                         />
                     </div>
 
-                    <div>
-                        <h3 className="text-lg font-semibold text-gray-700 mb-2">Payment Method</h3>
-                        <motion.select 
-                            name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition"
-                            whileFocus={{ scale: 1.03 }}
-                        >
-                            <option value="card">💳 Credit / Debit Card</option>
-                            <option value="paypal">🅿️ PayPal</option>
-                        </motion.select>
-                    </div>
+                   
 
                     <div className="border-t border-gray-300 pt-6">
                         <h3 className="text-lg font-semibold text-gray-800 mb-2">Order Summary</h3>
                         <div className="flex justify-between text-gray-700">
                             <p>Subtotal:</p>
-                            <p className="font-bold">Rs. 2600</p>
+                            <p className="font-bold">Rs. {subtotal}</p>
                         </div>
                         <div className="flex justify-between text-gray-700">
                             <p>Shipping:</p>
-                            <p className="font-bold">Rs. 200</p>
+                            <p className="font-bold">Rs. {shipping}</p>
                         </div>
                         <div className="flex justify-between text-xl font-bold text-gray-900 mt-3">
                             <p>Total:</p>
-                            <p>Rs. 2800</p>
+                            <p>Rs. {total}</p>
                         </div>
                     </div>
 
