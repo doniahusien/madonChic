@@ -4,6 +4,7 @@ import homeReducer from './features/home/homeSlice'
 import shopReducer from './features/shop/shopSlice'
 import profileReducer from './features/profile/profileSlice'
 import cartReducer from './features/cart/cartSlice'
+import checkoutReducer from './features/checkout/checkoutSlice'
 const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -11,6 +12,7 @@ const store = configureStore({
         shop: shopReducer,
         profile: profileReducer,
         cart: cartReducer,
+        checkout: checkoutReducer,
     }
 })
 export default store;
