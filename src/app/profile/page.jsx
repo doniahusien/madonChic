@@ -8,16 +8,12 @@ import { useSelector,useDispatch } from "react-redux";
 const ProfilePage = () => {
     const dispatch = useDispatch();
     const { profile } = useSelector((state) => state.profile);
-    const [profileData, setProfileData] = useState({});
-
+   
     useEffect(() => {
         dispatch(fetchProfile());
     }, []);
 
-    useEffect(() => {
-        setProfileData(profile);
-    }, [profile]);
-    
+
     const [selectedImage, setSelectedImage] = useState(null);
     const [activeTab, setActiveTab] = useState("editProfile");
     const handleImageChange = (e) => {
@@ -34,7 +30,7 @@ const ProfilePage = () => {
             <ProfileData profile={profile} handleImageChange={handleImageChange} selectedImage={selectedImage} />
             <ActiveTab setActiveTab={setActiveTab} activeTab={activeTab} />
         {activeTab === "editProfile" ? (
-                <EditProfile profileData={profileData} setProfileData={setProfileData } />
+                <EditProfile />
             ) : (
                 <Orders />
             )}
