@@ -3,15 +3,13 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Trash, Minus, Plus } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProduct } from "@/redux/features/shop/shopThunk";
+
 import { addToCart } from "@/redux/features/cart/cartThunk";
 import { decrementProduct } from "@/redux/features/cart/cartThunk";
 import { removeProduct } from "@/redux/features/cart/cartThunk";
 const CartItems = ({ cartItems }) => {
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(fetchProduct({ product_id: cartItems.product_id }))
-    }, [cartItems, dispatch]);
+ 
 
     return (
         <motion.div
