@@ -5,13 +5,17 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CartSidebar from "../cart/CartSidebar";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { fetchCartCount } from "@/redux/features/cart/cartThunk";
 export default function Nav() {
     const { token } = useSelector(state => state.auth);
     const {total_items} = useSelector(state => state.cart);
     const [cartOpen, setCart] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
-
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchCartCount());
+    },[]);
     useEffect(() => {
         setIsMounted(true);
         
