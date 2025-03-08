@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ListFilterPlusIcon, X } from "lucide-react";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
@@ -62,9 +62,12 @@ const Filters = ({ categories = [], onCategorySelect, max_price, onPriceChange }
                 initial={{ x: "-100%", opacity: 0 }}
                 animate={{ x: isOpen || isMdScreen ? 0 : "-100%", opacity: isOpen || isMdScreen ? 1 : 0 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
-                className={`fixed inset-0 z-50 md:relative w-full md:w-72 bg-white py-3 px-5 rounded-lg shadow-md 
-                    ${isOpen || isMdScreen ? "block" : "hidden"}`}
+                className={`fixed inset-0 md:relative w-full md:w-72 bg-white py-3 px-5 rounded-lg shadow-md 
+        ${isOpen ? "z-50" : "md:z-20"}`}
+                style={{ display: isOpen || isMdScreen ? "block" : "none" }} // Hide when closed
             >
+
+
                 <div className="flex flex-row pb-5 border-b-2 my-3 justify-between">
                     <h1 className="text-2xl font-bold text-gray-800">Filters</h1>
                     {!isMdScreen && (

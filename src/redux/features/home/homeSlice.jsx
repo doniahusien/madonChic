@@ -8,9 +8,9 @@ const initialState = {
     products: [],
     currentPage: 1,
     totalPages: 1,
+    max_price: 0,
     nextPageUrl: null,
     prevPageUrl: null,
-    max_price: 0,
     error: null,
     loading: false,
 }
@@ -25,7 +25,7 @@ const homeSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            //home data
+            //home products
             .addCase(fetchHomeData.pending, (state, action) => {
                 state.loading = true;
                 state.error = null;
@@ -52,7 +52,6 @@ const homeSlice = createSlice({
                 state.nextPageUrl = action.payload.men.next_page_url; 
                 state.prevPageUrl = action.payload.men.prev_page_url;
                 state.max_price = action.payload.max_price;
-                
             })
             .addCase(fetchMenProducts.rejected, (state, action) => {
                 state.loading = false;

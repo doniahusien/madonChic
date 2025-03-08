@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
-const ProductCard = ({ product }) => {
+const ProductCard = React.memo(({ product }) => {
   return (
     <motion.div 
       whileHover={{ scale: 1.01, boxShadow: "0px 10px 20px rgba(0,0,0,0.3)" }}
@@ -18,6 +18,7 @@ const ProductCard = ({ product }) => {
             alt="product"
             layout="fill" 
             className='rounded-t-lg transition-transform duration-700 hover:scale-105' 
+            loading="lazy"
           />
         </div>
         
@@ -30,7 +31,8 @@ const ProductCard = ({ product }) => {
         </div>
       </Link>
     </motion.div>
-  )
-}
+   );
+  });
+  
 
 export default ProductCard

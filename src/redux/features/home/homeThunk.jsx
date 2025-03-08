@@ -7,7 +7,7 @@ export const fetchHomeData = createAsyncThunk("home/fetchHomeData", async (_, { 
         return response.data;
     }
     catch (error) {
-        return rejectWithValue(error.response?.data || "failed");
+        return rejectWithValue(error.response?.data || "failed to fetch products");
     }
 })
 

@@ -1,17 +1,20 @@
 "use client";
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import Filters from "@/components/Products/Filters";
-import ProductsList from "@/components/Products/ProductsList";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWomenProducts } from "@/redux/features/home/homeThunk";
 import { setCurrentPage } from "@/redux/features/home/homeSlice";
 import { useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const ProductsList = dynamic(() => import("@/components/Products/ProductsList"));
+
 const WomensPage = () => {
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState("");
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState("");
- const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
     const categoryQuery = searchParams.get("category");
     const { women, max_price, loading, error, currentPage, totalPages, nextPageUrl, prevPageUrl } = useSelector(
         (state) => state.home
@@ -21,13 +24,13 @@ const WomensPage = () => {
         if (categoryQuery) {
             setSelectedCategory(categoryQuery);
         }
-        dispatch(fetchWomenProducts({ 
-            page: currentPage, 
-            category: selectedCategory, 
-            low_price: minPrice, 
-            max_price: maxPrice 
+        dispatch(fetchWomenProducts({
+            page: currentPage,
+            category: selectedCategory,
+            low_price: minPrice,
+            max_price: maxPrice
         }));
-    }, [dispatch, currentPage, selectedCategory, minPrice, maxPrice,categoryQuery]);
+    }, [dispatch, currentPage, selectedCategory, minPrice, maxPrice, categoryQuery]);
 
     const womenCategories = [
         "Women Top Wear",
@@ -38,7 +41,7 @@ const WomensPage = () => {
     ];
 
     return (
-        <div className="flex flex-col md:flex-row pt-6 gap-4 md:gap-0 bg-gray-100">
+        <div className="flex flex-col md:flex-row py-10 gap-4 md:gap-0 bg-gray-100">
             <Filters
                 categories={womenCategories}
                 max_price={max_price}
@@ -50,10 +53,11 @@ const WomensPage = () => {
             />
             <div className="flex-1">
                 {loading ? (
-                    <p className="text-center text-gray-600">Loading products...</p>
-                ) : error ? (
-                    <p className="text-center text-red-500">{error}</p>
-                ) : (
+                    <div className="flex justify-center items-center h-full">
+                        <div className="w-12 h-12 border-4 border-gray-300 border-t-red-500 rounded-full animate-spin"></div>
+                    </div>) : error ? (
+                        <p className="text-center text-red-500">{error}</p>
+                    ) : (
                     <>
                         <ProductsList products={women} />
                         <div className="flex justify-center items-center gap-4 mt-6">
