@@ -18,9 +18,21 @@ export default function Nav() {
     },[]);
     useEffect(() => {
         setIsMounted(true);
-        
     }, []);
-
+    const handleSearch = () => {
+        if (query.trim() === "") return;
+    
+        const lowerQuery = query.toLowerCase();
+    
+        if (lowerQuery.includes("women") || lowerQuery.includes("woman")) {
+            router.push(`/womens?category=${encodeURIComponent(query)}`);
+        } else if (lowerQuery.includes("men")) { 
+            router.push(`/mens?category=${encodeURIComponent(query)}`);
+        } else {
+            alert("Category not found. Try searching for 'Men' or 'Women' categories.");
+        }
+    };
+    
     const router = useRouter();
     const navLinks = [
         { href: "/", label: "Home" },
@@ -83,7 +95,7 @@ export default function Nav() {
                             name="srch"
                             placeholder="serach"
                             className="bg-transparent hidden sm:hidden md:block outline-none w-full p-2" />
-                        <button>
+                        <button onClick={handleSearch}>
                             <Search className="text-gray-700" />
                         </button>
                         {filteredSuggestions.length > 0 &&

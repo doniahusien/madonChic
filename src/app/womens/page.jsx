@@ -5,25 +5,29 @@ import ProductsList from "@/components/Products/ProductsList";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWomenProducts } from "@/redux/features/home/homeThunk";
 import { setCurrentPage } from "@/redux/features/home/homeSlice";
-
+import { useSearchParams } from "next/navigation";
 const WomensPage = () => {
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState("");
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState("");
-
+ const searchParams = useSearchParams();
+    const categoryQuery = searchParams.get("category");
     const { women, max_price, loading, error, currentPage, totalPages, nextPageUrl, prevPageUrl } = useSelector(
         (state) => state.home
     );
 
     useEffect(() => {
+        if (categoryQuery) {
+            setSelectedCategory(categoryQuery);
+        }
         dispatch(fetchWomenProducts({ 
             page: currentPage, 
             category: selectedCategory, 
             low_price: minPrice, 
             max_price: maxPrice 
         }));
-    }, [dispatch, currentPage, selectedCategory, minPrice, maxPrice]);
+    }, [dispatch, currentPage, selectedCategory, minPrice, maxPrice,categoryQuery]);
 
     const womenCategories = [
         "Women Top Wear",
