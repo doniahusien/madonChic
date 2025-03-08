@@ -17,54 +17,6 @@ const TrendingProducts = () => {
     dispatch(fetchHomeData());
   }, [dispatch]);
 
-  /*const products = {
-    "men": [{
-      src: "/Men.jpeg",
-    },
-    {
-      src: "/Men.jpeg",
-    },
-    {
-      src: "/Men.jpeg",
-    },
-    {
-      src: "/Men.jpeg",
-    },
-    {
-      src: "/Men.jpeg",
-    },
-    {
-      src: "/Men.jpeg",
-    }, {
-      src: "/Men.jpeg",
-    }, {
-      src: "/Men.jpeg",
-    }, {
-      src: "/Men.jpeg",
-    },
-    ],
-    "women": [{
-      src: "/women.jpeg",
-    }, {
-      src: "/women.jpeg",
-    }, {
-      src: "/women.jpeg",
-    }, {
-      src: "/women.jpeg",
-    }, {
-      src: "/women.jpeg",
-    }, {
-      src: "/women.jpeg",
-    }, {
-      src: "/women.jpeg",
-    }, {
-      src: "/women.jpeg",
-    }, {
-      src: "/women.jpeg",
-    },
-    ]
-  }*/
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   return (
@@ -113,7 +65,7 @@ const TrendingProducts = () => {
         >
           {products[category]?.map((item, index) => (
             <SwiperSlide key={index} style={{ width: 280 }}>
-              <Link href="/">
+              <Link href={`/perview/${item.id}`}>
                 <Image
                   src={item.image_1}
                   width={280}

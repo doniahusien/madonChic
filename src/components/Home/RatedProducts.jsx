@@ -34,7 +34,8 @@ const RatedProducts = () => {
             <div className='flex flex-row justify-center items-center gap-3 p-4 w-full flex-wrap'>
                 {products.top_rated?.map((item, index) => (
                     <div key={index} className=' transition-transform duration-500 ease-in-out  hover:scale-105  w-[200px] h-[250px] relative overflow-hidden rounded-lg'>
-                        <Link href="/">
+    
+                        <Link href={`/perview/${item.id}`}>
                             <Image
                                 src={item.image_1}
                                 fill
