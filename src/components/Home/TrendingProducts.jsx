@@ -2,23 +2,33 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import SectionTitle from './SectionTitle'
 import { Autoplay } from 'swiper/modules'
 import { SwiperSlide, Swiper } from 'swiper/react'
-import SectionTitle from './SectionTitle'
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchHomeData } from '@/redux/features/home/homeThunk'
 const TrendingProducts = () => {
   const dispatch = useDispatch();
-  const { products ,loading ,error} = useSelector((state) => state.home);
+  const products = useSelector((state) => state.home.products);
+  const loading = useSelector(state=>state.home.loading)
+  const error = useSelector(state=>state.home.error)
   const [category, setCategory] = useState("men");
 
   useEffect(() => {
     dispatch(fetchHomeData());
   }, [dispatch]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <div className="flex justify-center items-center h-20">
+  <div className="w-12 h-12 border-4 border-gray-300 border-t-red-500 rounded-full animate-spin"></div>
+</div>;
+
+if (error) return (
+  <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-md">
+    <p className="font-semibold">Error:</p>
+    <p>{error}</p>
+  </div>
+);
   return (
     <div className='flex flex-col justify-center text-center items-center gap-2'>
       {/*Header of section */}
