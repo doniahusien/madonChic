@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { logout } from '@/redux/features/auth/authThunk'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 const ProfileData = ({profile, handleImageChange, selectedImage}) => {
     const dispatch = useDispatch();
@@ -13,8 +13,8 @@ const ProfileData = ({profile, handleImageChange, selectedImage}) => {
         }
     }
     return (
-        <div className="flex items-center gap-6 border-b pb-4">
-            <div className="relative w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center gap-6 border-b pb-4">
+            <div className="relative w-24 h-24 bg-gray-200 rounded-full flex  items-center justify-center overflow-hidden">
                 <img
                     src={selectedImage ||profile.image}
                     alt="Profile"
@@ -28,7 +28,7 @@ const ProfileData = ({profile, handleImageChange, selectedImage}) => {
                 />
             </div>
             <div>
-                <h3 className="text-lg font-semibold">
+                <h3 className=" sm:text-base md:text-lg font-semibold">
                     Name - {profile.full_name} 
                 </h3>
                 <p className="text-gray-600">Email - {profile.email}</p>

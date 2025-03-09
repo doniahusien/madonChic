@@ -8,8 +8,7 @@ import { fetchProfile, uploadImage } from "@/redux/features/profile/profileThunk
 import { useSelector,useDispatch } from "react-redux";
 const ProfilePage = () => {
     const dispatch = useDispatch();
-    const { profile } = useSelector((state) => state.profile);
-   
+    const { profile,loading } = useSelector((state) => state.profile);
     useEffect(() => {
         dispatch(fetchProfile());
     }, []);
@@ -27,8 +26,8 @@ const ProfilePage = () => {
 
 
     return (
-        <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-            <h2 className="text-3xl font-bold text-center mb-6">Customer Dashboard</h2>
+        <div className="max-w-4xl mx-auto mt-10 p-6 my-10 bg-white shadow-md rounded-lg">
+            <h2 className=" sm:text-2xl md:text-3xl font-bold text-center mb-6">Customer Dashboard</h2>
             <ProfileData profile={profile} handleImageChange={handleImageChange} selectedImage={selectedImage} />
             <ActiveTab setActiveTab={setActiveTab} activeTab={activeTab} />
         {activeTab === "editProfile" ? (

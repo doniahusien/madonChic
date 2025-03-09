@@ -16,7 +16,6 @@ const EditProfile = () => {
         country: "",
     });
 
-   
     useEffect(() => {
         if (profile) {
             setProfileData({
