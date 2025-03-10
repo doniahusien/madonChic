@@ -28,7 +28,6 @@ export const fetchCartCount = createAsyncThunk("cart/fetchCartCount", async (_, 
         return rejectWithValue(error.response.data);
     }
 });
-
 export const addToCart = createAsyncThunk(
     "cart/addToCart",
     async ({ product_id, size, quantity }, { rejectWithValue, getState, dispatch }) => {
@@ -44,8 +43,14 @@ export const addToCart = createAsyncThunk(
                     },
                 }
             );
-            dispatch(fetchCart()); // Ensure UI updates immediately
-            dispatch(fetchCartCount()); // Ensure cart count updates immediately
+
+            // Update localStorage immediately for faster updates
+            const newCart = [...getState().cart.cart, response.data.cartItem];
+            localStorage.setItem("cart", JSON.stringify(newCart));
+
+            dispatch(fetchCart());
+            dispatch(fetchCartCount());
+
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "An error occurred");
@@ -68,8 +73,18 @@ export const decrementProduct = createAsyncThunk(
                     },
                 }
             );
+
+            // Update localStorage
+            const newCart = getState().cart.cart.map(item =>
+                item.product_id === product_id && item.size === size
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            );
+            localStorage.setItem("cart", JSON.stringify(newCart));
+
             dispatch(fetchCart());
             dispatch(fetchCartCount());
+
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "An error occurred");
@@ -92,8 +107,16 @@ export const removeProduct = createAsyncThunk(
                     },
                 }
             );
+
+            // Remove item from localStorage
+            const newCart = getState().cart.cart.filter(
+                (item) => !(item.product_id === product_id && item.size === size)
+            );
+            localStorage.setItem("cart", JSON.stringify(newCart));
+
             dispatch(fetchCart());
             dispatch(fetchCartCount());
+
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "An error occurred");
