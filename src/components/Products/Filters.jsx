@@ -1,17 +1,20 @@
 "use client";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import React, { useState, useEffect, useCallback } from "react";
 import { ListFilterPlusIcon, X } from "lucide-react";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 
-const Filters = ({ categories = [], onCategorySelect, max_price, onPriceChange }) => {
+const Filters = ({ categories = [], max_price, onPriceChange }) => {
     const [isOpen, setOpen] = useState(false);
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(max_price);
     const [isMdScreen, setIsMdScreen] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const x = max_price;
+
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const categoryQuery = searchParams.get("category") || "";
 
     useEffect(() => {
         setMaxPrice(Number(max_price));
@@ -25,9 +28,15 @@ const Filters = ({ categories = [], onCategorySelect, max_price, onPriceChange }
     }, []);
 
     const handleCategoryClick = useCallback((category) => {
-        setSelectedCategory(category);
-        onCategorySelect(category);
-    }, [onCategorySelect]);
+        const newCategory = categoryQuery === category ? "" : category;
+        const params = new URLSearchParams(searchParams);
+        if (newCategory) {
+            params.set("category", newCategory);
+        } else {
+            params.delete("category");
+        }
+        router.push(`?${params.toString()}`, { scroll: false });
+    }, [categoryQuery, router, searchParams]);
 
     const handleSliderChange = useCallback(([min, max]) => {
         setMinPrice(min);
@@ -36,11 +45,10 @@ const Filters = ({ categories = [], onCategorySelect, max_price, onPriceChange }
     }, [onPriceChange]);
 
     const resetFilters = () => {
-        setSelectedCategory("");
         setMinPrice(0);
         setMaxPrice(max_price);
-        onCategorySelect("");
-        onPriceChange(0, max_price);
+        const params = new URLSearchParams();
+        router.push(`?${params.toString()}`, { scroll: false });
     };
 
     return (
@@ -64,10 +72,8 @@ const Filters = ({ categories = [], onCategorySelect, max_price, onPriceChange }
                 transition={{ duration: 0.4, ease: "easeInOut" }}
                 className={`fixed inset-0 md:relative w-full md:w-72 bg-white py-3 px-5 rounded-lg shadow-md 
         ${isOpen ? "z-50" : "md:z-20"}`}
-                style={{ display: isOpen || isMdScreen ? "block" : "none" }} // Hide when closed
+                style={{ display: isOpen || isMdScreen ? "block" : "none" }}
             >
-
-
                 <div className="flex flex-row pb-5 border-b-2 my-3 justify-between">
                     <h1 className="text-2xl font-bold text-gray-800">Filters</h1>
                     {!isMdScreen && (
@@ -84,7 +90,7 @@ const Filters = ({ categories = [], onCategorySelect, max_price, onPriceChange }
                     <div className="relative py-5">
                         <RangeSlider
                             min={0}
-                            max={Number(x)}
+                            max={Number(max_price)}
                             step={200}
                             value={[minPrice, maxPrice]}
                             onInput={handleSliderChange}
@@ -102,7 +108,7 @@ const Filters = ({ categories = [], onCategorySelect, max_price, onPriceChange }
                         {categories.length ? categories.map((item, index) => (
                             <motion.li
                                 key={index}
-                                className={`cursor-pointer py-1 ${selectedCategory === item ? "text-red-500 font-bold" : "text-gray-600"} hover:text-red-500 transition`}
+                                className={`cursor-pointer py-1 ${categoryQuery === item ? "text-red-500 font-bold" : "text-gray-600"} hover:text-red-500 transition`}
                                 whileHover={{ scale: 1.05 }}
                                 onClick={() => handleCategoryClick(item)}
                             >
@@ -121,4 +127,5 @@ const Filters = ({ categories = [], onCategorySelect, max_price, onPriceChange }
         </>
     );
 };
+
 export default Filters;
