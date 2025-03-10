@@ -1,17 +1,19 @@
-"use client"
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { useSelector, } from 'react-redux'
+"use client";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+
 const GuestRoute = ({ children }) => {
     const router = useRouter();
-    const { token } = useSelector(state => state.auth);
+    const { token } = useSelector((state) => state.auth);
+
     useEffect(() => {
         if (token) {
-            router.push("/")
+            router.push("/");
         }
-    }, [token], router)
+    }, [token]);
 
-    return <>{!token ? children : null}</>;
-}
+    return !token ? children : null;
+};
 
-export default GuestRoute
+export default GuestRoute;
