@@ -1,36 +1,50 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Filters from "@/components/Products/Filters";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWomenProducts } from "@/redux/features/home/homeThunk";
 import { setCurrentPage } from "@/redux/features/home/homeSlice";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
 const ProductsList = dynamic(() => import("@/components/Products/ProductsList"));
 
 const WomensPage = () => {
     const dispatch = useDispatch();
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+
+
+    const categoryQuery = searchParams.get("category") || "";
+
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState("");
-    const searchParams = useSearchParams();
-    const categoryQuery = searchParams.get("category");
+
     const { women, max_price, loading, error, currentPage, totalPages, nextPageUrl, prevPageUrl } = useSelector(
         (state) => state.home
     );
 
     useEffect(() => {
-        if (categoryQuery) {
-            setSelectedCategory(categoryQuery);
-        }
         dispatch(fetchWomenProducts({
             page: currentPage,
-            category: selectedCategory,
+            category: categoryQuery,
             low_price: minPrice,
             max_price: maxPrice
         }));
-    }, [dispatch, currentPage, selectedCategory, minPrice, maxPrice, categoryQuery]);
+    }, [dispatch, currentPage, categoryQuery, minPrice, maxPrice]);
+
+    // Function to update category in URL
+    const handleCategoryChange = (newCategory) => {
+        const params = new URLSearchParams(searchParams);
+        if (newCategory) {
+            params.set("category", newCategory);
+        } else {
+            params.delete("category");
+        }
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    };
 
     const womenCategories = [
         "Women Top Wear",
@@ -45,7 +59,7 @@ const WomensPage = () => {
             <Filters
                 categories={womenCategories}
                 max_price={max_price}
-                onCategorySelect={setSelectedCategory}
+                onCategorySelect={handleCategoryChange}
                 onPriceChange={(min, max) => {
                     setMinPrice(min);
                     setMaxPrice(max);
@@ -85,4 +99,5 @@ const WomensPage = () => {
         </div>
     );
 };
-export default WomensPage
+
+export default WomensPage;
