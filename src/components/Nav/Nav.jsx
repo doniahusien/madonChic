@@ -1,29 +1,33 @@
 "use client"
 import { useState, useEffect } from "react";
 import { Menu, X, ShoppingBag, Search, User } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter  } from "next/navigation";
 import Link from "next/link";
 import CartSidebar from "../cart/CartSidebar";
 import { useSelector,useDispatch } from "react-redux";
 import { fetchCartCount } from "@/redux/features/cart/cartThunk";
 export default function Nav() {
+    const pathname = usePathname();
+    const router = useRouter();
     const { token } = useSelector(state => state.auth);
     const {total_items} = useSelector(state => state.cart);
     const [cartOpen, setCart] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [query, setQuery] = useState("");
+    const [filteredSuggestions, setFiltered] = useState([]);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchCartCount());
-    },[]);
+    }, []);
+    
     useEffect(() => {
         setIsMounted(true);
     }, []);
+
     const handleSearch = () => {
         if (query.trim() === "") return;
-    
         const lowerQuery = query.toLowerCase();
-    
         if (lowerQuery.includes("women") || lowerQuery.includes("woman")) {
             router.push(`/womens?category=${encodeURIComponent(query)}`);
         } else if (lowerQuery.includes("men")) { 
@@ -32,8 +36,7 @@ export default function Nav() {
             alert("Category not found. Try searching for 'Men' or 'Women' categories.");
         }
     };
-    
-    const router = useRouter();
+
     const navLinks = [
         { href: "/", label: "Home" },
         { href: "/mens", label: "Men's" },
@@ -41,8 +44,6 @@ export default function Nav() {
         { href: "/top-selling", label: "Top Selling" },
         { href: "/newest", label: "Newest" }
     ];
-    const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
     const suggestions = [
         "Men Top Wear",
         "Men Hoodie",
@@ -52,8 +53,7 @@ export default function Nav() {
         "Men Jackets",
         "Women Jacket",
     ];
-    const [query, setQuery] = useState("");
-    const [filteredSuggestions, setFiltered] = useState([]);
+
     const handleChange = (e) => {
         const value = e.target.value;
         setQuery(value);

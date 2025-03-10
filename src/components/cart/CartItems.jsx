@@ -9,8 +9,6 @@ import { decrementProduct } from "@/redux/features/cart/cartThunk";
 import { removeProduct } from "@/redux/features/cart/cartThunk";
 const CartItems = ({ cartItems }) => {
     const dispatch = useDispatch();
- 
-
     return (
         <motion.div
             className="mt-5 space-y-5 overflow-y-auto max-h-[60vh] pr-2"

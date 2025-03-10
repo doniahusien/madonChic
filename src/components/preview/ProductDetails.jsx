@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cart/cartThunk";
 const ProductDetails = ({ product, sizes }) => {
   const [selectedSize, setSelectedSize] = useState(null);
+  const [warning, setWarning] = useState(null);
   const dispatch = useDispatch();
   return (
     <div className="p-5 space-y-4 w-full md:w-3/4 lg:w-1/3 mx-auto">
@@ -44,11 +45,18 @@ const ProductDetails = ({ product, sizes }) => {
       <div className="pt-5">
         <button
           onClick={() => {
-            dispatch(addToCart({ product_id: product.id, size: selectedSize, quantity: 1 }));
+            if (!selectedSize) {
+              setWarning("Select Size first");
+            }
+            else {
+              dispatch(addToCart({ product_id: product.id, size: selectedSize, quantity: 1 }));
+              setWarning(null);
+            }
           }}
           className="w-full border border-black bg-black text-white py-2 rounded hover:text-black hover:bg-white cursor-pointer  transition-all duration-700 ease-in-out">
           ADD TO SHOP
         </button>
+        {warning && <p>{warning}</p>}
         <button className="w-full border border-black bg-black text-white py-2 rounded mt-2 hover:text-black hover:bg-white cursor-pointer  transition-all duration-700 ease-in-out">
           BUY NOW
         </button>

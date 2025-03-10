@@ -3,17 +3,18 @@ import ProductDetails from "@/components/preview/ProductDetails";
 import ProductImages from "@/components/preview/ProductImages";
 import ProductReviews from "@/components/preview/ProductReviews";
 import DeliverySection from "@/components/preview/DeliverySection";
+import ReviewModel from "@/components/preview/ReviewModel"
+
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchProduct, fetchProductReview } from "@/redux/features/shop/shopThunk";
 import { useParams } from "next/navigation";
-import ReviewModel from "@/components/preview/ReviewModel"
 
 export default function ProductPreview() {
     const dispatch = useDispatch();
     const { id } = useParams();
     const [showModal, setShowModal] = useState(false);
-    const { totalReview,product, review, loading, error } = useSelector((state) => state.shop);
+    const { totalReview, product, review, loading, error } = useSelector((state) => state.shop);
 
     useEffect(() => {
         if (id) {
@@ -34,7 +35,10 @@ export default function ProductPreview() {
         description:
             "Navy blue woven formal Slim fit Mid-rise length, regular pattern solid flat-front, with no pleats design, feature: plain, 4 pockets.",
     };
-    if (loading) return <p>Loading...</p>;
+
+    if (loading) return <div className="flex justify-center items-center h-full pt-20">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-red-500 rounded-full animate-spin"></div>
+    </div>;
     if (error) return <p className="text-red-500">Error: {error}</p>;
 
     return (
@@ -46,7 +50,7 @@ export default function ProductPreview() {
 
             <div className="flex w-full md:w-1/2 justify-between items-center border-b pb-2">
                 <h3 className="text-lg font-semibold">
-                    Total Reviews {totalReview?totalReview:0}
+                    Total Reviews {totalReview ? totalReview : 0}
                 </h3>
                 <button
                     className="bg-red-600 text-white px-4 py-2 rounded-md"
@@ -55,7 +59,7 @@ export default function ProductPreview() {
                     Write Review
                 </button>
             </div>
-            {review.length > 0 && <ProductReviews review={review}/>}
+            {review.length > 0 && <ProductReviews review={review} />}
             {showModal && <ReviewModel showModal={showModal} setShowModal={setShowModal} />}
             <DeliverySection />
         </div>

@@ -6,6 +6,7 @@ const initialState = {
     sub_total: 0,
     success: null,
     error: null,
+    
 };
 
 const cartSlice = createSlice({

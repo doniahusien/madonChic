@@ -12,7 +12,7 @@ const CartSidebar = ({ cartOpen, setCart }) => {
     const { cart, sub_total } = useSelector((state) => state.cart);
     useEffect(() => {
         dispatch(fetchCart());
-    }, [dispatch, cart]);
+    }, [dispatch]);
     
         return (
             <motion.div

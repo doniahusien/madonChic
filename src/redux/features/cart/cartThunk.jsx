@@ -13,7 +13,7 @@ export const fetchCart = createAsyncThunk("cart/fetchCart", async (_, { rejectWi
     } catch (error) {
         return rejectWithValue(error.response.data);
     }
-})
+});
 
 export const fetchCartCount = createAsyncThunk("cart/fetchCartCount", async (_, { rejectWithValue, getState }) => {
     try {
@@ -31,16 +31,40 @@ export const fetchCartCount = createAsyncThunk("cart/fetchCartCount", async (_, 
 
 export const addToCart = createAsyncThunk(
     "cart/addToCart",
-    async ({ product_id, size, quantity }, { rejectWithValue, getState }) => {
+    async ({ product_id, size, quantity }, { rejectWithValue, getState, dispatch }) => {
         try {
             const token = getState().auth.token;
             const response = await axios.post(
                 "https://e-commerce-production-8442.up.railway.app/api/cart/add",
-                { product_id, size, quantity }, 
+                { product_id, size, quantity },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json", 
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            dispatch(fetchCart()); // Ensure UI updates immediately
+            dispatch(fetchCartCount()); // Ensure cart count updates immediately
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "An error occurred");
+        }
+    }
+);
+
+export const decrementProduct = createAsyncThunk(
+    "cart/decrementProduct",
+    async ({ product_id, size }, { rejectWithValue, getState, dispatch }) => {
+        try {
+            const token = getState().auth.token;
+            const response = await axios.post(
+                "https://e-commerce-production-8442.up.railway.app/api/cart/decrement",
+                { product_id, size },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
                     },
                 }
             );
@@ -53,50 +77,26 @@ export const addToCart = createAsyncThunk(
     }
 );
 
-
-export const decrementProduct = createAsyncThunk(
-    "cart/decrementProduct",
-    async ({ product_id, size }, { rejectWithValue, getState }) => {
-        try {
-            const token = getState().auth.token;
-            const response = await axios.post(
-                "https://e-commerce-production-8442.up.railway.app/api/cart/decrement",
-                { product_id, size }, 
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json", 
-                    },
-                }
-            );
-            dispatch(fetchCart());
-            return response.data;
-        } catch (error) {
-            return rejectWithValue(error.response?.data || "An error occurred");
-        }
-    }
-);
-
 export const removeProduct = createAsyncThunk(
     "cart/removeProduct",
-    async ({ product_id, size }, { rejectWithValue, getState }) => {
+    async ({ product_id, size }, { rejectWithValue, getState, dispatch }) => {
         try {
             const token = getState().auth.token;
             const response = await axios.post(
                 "https://e-commerce-production-8442.up.railway.app/api/cart/remove",
-                { product_id, size }, 
+                { product_id, size },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json", 
+                        "Content-Type": "application/json",
                     },
                 }
             );
             dispatch(fetchCart());
+            dispatch(fetchCartCount());
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "An error occurred");
         }
     }
 );
-
