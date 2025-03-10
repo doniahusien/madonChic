@@ -12,7 +12,7 @@ export default function RippleLoader() {
     if (!isClient) return null; 
 
     return (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-0 z-50">
+        <div className="fixed inset-0 flex justify-center items-center bg-white z-50">
             {/* Ripple Circles */}
             <div className="relative w-20 h-20 flex justify-center items-center">
                 <motion.div
