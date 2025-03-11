@@ -1,3 +1,4 @@
+"use client"
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCart, fetchCartCount, addToCart, decrementProduct, removeProduct } from "./cartThunk";
 
