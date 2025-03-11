@@ -4,22 +4,22 @@ import Filters from '@/components/Products/Filters'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchTopSellingProducts } from '@/redux/features/home/homeThunk'
 import dynamic from "next/dynamic";
-
+import { useSearchParams } from 'next/navigation';
 const ProductsList = dynamic(() => import("@/components/Products/ProductsList"));
 
 const topSellingPage = () => {
   const { top_selling, max_price, loading } = useSelector((state) => state.home);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
+  const searchParams = useSearchParams();
+  const categoryQuery = searchParams.get("category") || "";  const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchTopSellingProducts({
-      category: selectedCategory,
+      category: categoryQuery,
       low_price: minPrice,
       max_price: maxPrice
     }));
-  }, [dispatch, selectedCategory, minPrice, maxPrice]);
+  }, [dispatch, categoryQuery, minPrice, maxPrice]);
 
   const topSelling = ["men", "women"];
 
@@ -28,7 +28,6 @@ const topSellingPage = () => {
       <Filters
         categories={topSelling}
         max_price={max_price}
-        onCategorySelect={setSelectedCategory}
         onPriceChange={(min, max) => {
           setMinPrice(min);
           setMaxPrice(max);

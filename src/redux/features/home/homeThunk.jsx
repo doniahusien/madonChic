@@ -64,6 +64,8 @@ export const fetchNewestProducts = createAsyncThunk(
             const response = await axios.get(
                 `https://e-commerce-production-8442.up.railway.app/api/newest?category=${category}&low_price=${low_price}&max_price=${max_price}`
             );
+            console.log(response.data );
+            
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "Something went wrong");
