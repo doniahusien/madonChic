@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Trash, Minus, Plus } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";

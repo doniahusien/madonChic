@@ -1,3 +1,4 @@
+"use client";
 import React from 'react'
 import AuthWrapper from '@/components/auth/AuthWrapper'
 import SignupForm from '@/components/auth/SignupForm'

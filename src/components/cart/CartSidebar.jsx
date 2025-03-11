@@ -6,14 +6,12 @@ import { useRouter } from "next/navigation";
 import CartItems from "./CartItems";
 import { fetchCart } from "@/redux/features/cart/cartThunk";
 import { useSelector, useDispatch } from "react-redux";
-import { setCartFromLocalStorage } from "@/redux/features/cart/cartSlice";
 
 const CartSidebar = ({ cartOpen, setCart }) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const { cart, sub_total } = useSelector((state) => state.cart);
     useEffect(() => {
-        dispatch(setCartFromLocalStorage()); 
         dispatch(fetchCart()); 
     }, [dispatch]);
     
